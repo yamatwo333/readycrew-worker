@@ -1,0 +1,24 @@
+name: readycrew-worker
+
+on:
+  repository_dispatch:
+    types: [readycrew]       # GASから即時発火
+  workflow_dispatch:
+  schedule:
+    - cron: "0/30 * * * *"   # 予備。30分毎
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: node worker.mjs
+        env:
+          SA_JSON: ${{ secrets.SA_JSON }}
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          SHEET_MAIN: ${{ secrets.SHEET_MAIN }}
+          SHEET_QUEUE: ${{ secrets.SHEET_QUEUE }}
