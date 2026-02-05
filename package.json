@@ -1,0 +1,8 @@
+{
+  "name": "readycrew-worker",
+  "type": "module",
+  "dependencies": {
+    "playwright": "^1.44.0",
+    "googleapis": "^133.0.0"
+  }
+}
