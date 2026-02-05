@@ -2,10 +2,10 @@ name: readycrew-worker
 
 on:
   repository_dispatch:
-    types: [readycrew]       # GASから即時発火
+    types: [readycrew]
   workflow_dispatch:
   schedule:
-    - cron: "0/30 * * * *"   # 予備。30分毎
+    - cron: "0/30 * * * *"
 
 jobs:
   run:
@@ -24,7 +24,6 @@ jobs:
         run: node worker.mjs
         env:
           SA_JSON: ${{ secrets.SA_JSON }}
-          SPREADSHEET_ID: ${{ secrets.SA_JSON != '' && secrets.SPREADSHEET_ID || '' }}
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
           SHEET_MAIN: ${{ secrets.SHEET_MAIN }}
           SHEET_QUEUE: ${{ secrets.SHEET_QUEUE }}
