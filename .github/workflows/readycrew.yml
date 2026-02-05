@@ -12,13 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install
-      - run: node worker.mjs
+
+      - name: Install deps
+        run: npm install
+
+      - name: Run worker
+        run: node worker.mjs
         env:
           SA_JSON: ${{ secrets.SA_JSON }}
+          SPREADSHEET_ID: ${{ secrets.SA_JSON != '' && secrets.SPREADSHEET_ID || '' }}
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
           SHEET_MAIN: ${{ secrets.SHEET_MAIN }}
           SHEET_QUEUE: ${{ secrets.SHEET_QUEUE }}
